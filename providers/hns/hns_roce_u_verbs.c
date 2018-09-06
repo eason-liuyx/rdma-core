@@ -194,6 +194,19 @@ struct ibv_mw *hns_roce_u_alloc_mw(struct ibv_pd *pd, enum ibv_mw_type type)
 	return mw;
 }
 
+int hns_roce_u_dealloc_mw(struct ibv_mw *mw)
+{
+	int ret;
+
+	ret = ibv_cmd_dealloc_mw(mw);
+	if (ret)
+		return ret;
+
+	free(mw);
+
+	return 0;
+}
+
 static int align_cq_size(int req)
 {
 	int nent;
