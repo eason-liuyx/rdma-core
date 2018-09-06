@@ -276,6 +276,7 @@ int hns_roce_u_rereg_mr(struct verbs_mr *mr, int flags, struct ibv_pd *pd,
 int hns_roce_u_dereg_mr(struct verbs_mr *mr);
 
 struct ibv_mw *hns_roce_u_alloc_mw(struct ibv_pd *pd, enum ibv_mw_type type);
+int hns_roce_u_dealloc_mw(struct ibv_mw *mw);
 
 struct ibv_cq *hns_roce_u_create_cq(struct ibv_context *context, int cqe,
 				    struct ibv_comp_channel *channel,
