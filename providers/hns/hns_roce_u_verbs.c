@@ -175,6 +175,25 @@ int hns_roce_u_dereg_mr(struct verbs_mr *vmr)
 	return ret;
 }
 
+struct ibv_mw *hns_roce_u_alloc_mw(struct ibv_pd *pd, enum ibv_mw_type type)
+{
+	struct ibv_mw *mw;
+	struct ibv_alloc_mw cmd = {};
+	struct ib_uverbs_alloc_mw_resp resp = {};
+
+	mw = malloc(sizeof(*mw));
+	if (!mw)
+		return NULL;
+
+	if (ibv_cmd_alloc_mw(pd, type, mw, &cmd, sizeof(cmd),
+			     &resp, sizeof(resp))) {
+		free(mw);
+		return NULL;
+	}
+
+	return mw;
+}
+
 static int align_cq_size(int req)
 {
 	int nent;
